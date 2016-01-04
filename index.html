@@ -3,10 +3,21 @@ layout: default
 ---
 
 <div class="home-card row">
-<div class="logo">
-  <span class="logo-text-first">Nathan </span><span class="logo-text-last">Lawrence</span>
+<div class="brand-column col-md-4">
+  <div class="logo">
+    <span class="logo-text-first">Nathan </span><span class="logo-text-last">Lawrence</span>
+  </div>
+  <ul class="tagline-list">
+    <li>Photo</li>
+    <li> - </li>
+    <li>Video</li>
+    <li> - </li>
+    <li>Web</li>
+  </ul>
 </div>
-  <div class="post-list-view">
+  <div class="col-md-4"></div>
+  <div class="post-list-short col-md-4">
+    <h2>Recent Posts</h2>
     <ul class="post-list">
       {% for post in site.posts %}
         <li>
@@ -18,8 +29,14 @@ layout: default
         </li>
       {% endfor %}
   </ul>
+  <ul class="access-options">
+    <li class="view-all-posts"><a>View all posts</a></li>
+    <li> - </li>
+    <li class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></li>
+  </ul>
+  
   </div>
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  
 
 </div>
