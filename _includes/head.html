@@ -6,6 +6,11 @@
   <meta property="og:type"   content="article" />
   <meta property="article:author" content="https://www.facebook.com/nathan.lawrence.barrick" /> 
   <meta name="author" content="Nathan Lawrence" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@nathanblawrence" />
+  <meta name="twitter:title" content="{{ page.title }}" />
+  <meta name="twitter:description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}" />
+
 
   <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
   <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
