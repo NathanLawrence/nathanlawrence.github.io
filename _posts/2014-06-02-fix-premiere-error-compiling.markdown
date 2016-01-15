@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: post-short
 title:  "How to Fix Adobe Premiere Pro's 'Error Compiling Movie, Unknown Error' Problem"
 date:   2014-06-03 13:13:33 -0600
 categories: video
