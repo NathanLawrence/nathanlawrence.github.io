@@ -32,7 +32,7 @@ layout: default
       {% endfor %}
   </ul>
   <ul class="access-options">
-    <li class="view-all-posts"><a href="#">View all posts</a></li>
+    <li class="view-all-posts"><a href="{{ "/all-posts/" | prepend: site.baseurl }}">View all posts</a></li>
     <li> - </li>
     <li class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></li>
   </ul>
