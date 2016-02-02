@@ -4,12 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+I'm Nathan Lawrence, a web content professional currently working out of Columbia, Missouri, United States at [KBIA Public Radio](http://www.kbia.org) and [Classical 90.5](http://www.kmuc.org). I'm a recent graduate of Lawrence University (no relation), where I studied English, Film Studies and Gender/Ethnic Studies.
 
-You can find the source code for the Jekyll new theme at:
-{% include icon-github.html username="jglovier" %} /
-[jekyll-new](https://github.com/jglovier/jekyll-new)
+My mission is to create new ways for news organizations serving the public good to communicate with their users online.
 
-You can find the source code for Jekyll at
-{% include icon-github.html username="jekyll" %} /
-[jekyll](https://github.com/jekyll/jekyll)
+You can view my work on [GitHub](https://www.github.com/nathanlawrence).
