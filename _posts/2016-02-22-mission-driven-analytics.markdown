@@ -4,7 +4,7 @@ title:  "You're Probably Using Your Analytics Wrong"
 date:   2016-02-22 01:13:33 -0600
 categories: web journalism development
 excerpt: A brief manifesto in favor of a mission-driven approach to analytics.
-preview-image: ""
+preview-image: "http://nathanlawrence.github.io/img/2016/feb/ga-logo.png"
 ---
 After a couple of weeks of work on it in my off-time, I'm pleased to finally introduce my own implementation of an interactive [Markdown Cheat Sheet](http://www.mdcheatsheet.com) to the world.
 
