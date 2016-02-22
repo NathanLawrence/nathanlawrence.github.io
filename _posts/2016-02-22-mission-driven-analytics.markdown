@@ -1,8 +1,9 @@
 ---
 layout: post-short
 title:  "You're Probably Using Your Analytics Wrong"
-date:   2016-01-15 13:13:33 -0600
+date:   2016-02-22 01:13:33 -0600
 categories: web journalism development
+excerpt: A brief manifesto in favor of a mission-driven approach to analytics.
 preview-image: ""
 ---
 After a couple of weeks of work on it in my off-time, I'm pleased to finally introduce my own implementation of an interactive [Markdown Cheat Sheet](http://www.mdcheatsheet.com) to the world.
