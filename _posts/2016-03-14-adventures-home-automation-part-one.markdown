@@ -1,7 +1,7 @@
 ---
 layout: post-short
 title:  "Adventures in Home Automation - Part One"
-date:   2016-02-22 01:13:33 -0600
+date:   2016-03-14 01:13:33 -0600
 categories: home-automation
 excerpt: After months of deliberation, I've finally taken the plunge and invested in a SmartThings starter kit.
 preview-image: "https://d16hjwy4p1a8tm.cloudfront.net/app/public/spree/products/955/product/shop-app_900x600_monitoring-kit_final-1.jpg"
