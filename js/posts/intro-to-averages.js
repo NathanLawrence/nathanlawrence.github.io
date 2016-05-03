@@ -58,7 +58,7 @@ $(document).ready(function() {
 	         
 	    // If we've scrolled the chart off the page, even the tiniest bit, change its position to fixed to stick to top.
 	    // Otherwise, change it back to relative
-	    if (scrollTop > stickyChartTop - 3) { //These three pixels of "room" help prevent a bouncing effect where the JS hasn't caught up to the page.
+	    if (scrollTop > stickyChartTop - 5 ) { // This 5px add may seem like a lot of extra room, but it creates a kinda neat magnet effect and avoids weird bouncing artifacts.
 	        $('#main-chart').addClass('sticky');
 	        $('#main-chart').css('left',stickyChartLeft - 10);
 	        $('#main-chart').css('background-color',$('body').css('background-color'));
