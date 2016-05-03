@@ -3,7 +3,9 @@ $(document).ready(function() {
 	//STARTER D3 CODE BEGINS HERE
 
 	var bardata = [Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1, Math.floor(Math.random() * 9) + 1];
-	var height = 400,
+	var dataSort = bardata.slice().sort();
+
+	var height = $(window).height()/2,
 		width = $('#main-chart').width();
 		
 	var barOffset = .1;
@@ -47,57 +49,98 @@ $(document).ready(function() {
 	// STARTER JQUERY CODE STARTS HERE
 	$('.set-lowest').html(Math.min.apply(Math, bardata));
 	$('.set-highest').html(Math.max.apply(Math, bardata));
+	$('.set-median').html(dataSort[5]);
+	$('.after-main-chart').css('padding-top',height/6);
 
 	// Grab the initial top offset of the chart.
    	var stickyChartTop = $('#main-chart').offset().top;
    	var stickyChartLeft = $('#main-chart').offset().left;
+   	var orderChartTop = $('#order-chart').offset().top;
+   	var colorMedianTop = $('#color-median').offset().top;
+   	var unColorMedianTop = $('#un-color-median').offset().top;
+   	// console.log('Top:' + orderChartTop);
    	
    	// This function will decide if the navigation bar should have "sticky" class or not.
    	var stickyChart = function(){
-	    var scrollTop = $(window).scrollTop(); // our current vertical position from the top
+	    var scrollTop = $(window).scrollTop(); // Current vertical scroll position.
 	         
 	    // If we've scrolled the chart off the page, even the tiniest bit, change its position to fixed to stick to top.
 	    // Otherwise, change it back to relative
-	    if (scrollTop > stickyChartTop - 5 ) { // This 5px add may seem like a lot of extra room, but it creates a kinda neat magnet effect and avoids weird bouncing artifacts.
-	        $('#main-chart').addClass('sticky');
+	    if (scrollTop > stickyChartTop - 5) { // This 5px add may seem like a lot of extra room, but it creates a kinda neat magnet effect and avoids weird bouncing artifacts.
+	        console.log(scrollTop);
+	        $('#main-chart').addClass('sticky');   
+	        console.log('after:' + scrollTop);
 	        $('#main-chart').css('left',stickyChartLeft - 10);
 	        $('#main-chart').css('background-color',$('body').css('background-color'));
 	        $('#main-chart').css('border-color',$('body').css('background-color'));
-	        $('.before-main-chart').css('padding-bottom',$('#main-chart').height());
-	        orderChart();
+	        $('.before-main-chart').css('padding-bottom',height);
+	        
 	    } else {
+	    	console.log(scrollTop);
+	    	$('.before-main-chart').css('padding',0);
 	        $('#main-chart').removeClass('sticky'); 
-	        $('.before-main-chart').css('padding-bottom',0);   
 	    }
 	};
 
 	var orderChart = function(){
-		var dataSort = bardata.sort();
-		d3.selectAll('rect')
-			.data(dataSort)
-			.each(function(d,i){
-				console.log(d);
-				d3.select(this)
-				.transition(1000)
-				.ease('elastic')
-				.delay(50)
-				//.style('fill','#333')
-				.attr('height', function(d){
-					return yScale(d);
-				})
-				.attr('y', function(d){
-					return height - yScale(d) - paddingTop + paddingBottom;
+		var scrollTop = $(window).scrollTop();
+		if ((scrollTop + $(window).height()/2 + 50) > orderChartTop){
+			d3.selectAll('rect')
+				.data(dataSort)
+				.each(function(d,i){
+					console.log(d);
+					d3.select(this)
+					.transition(1000)
+					.ease('elastic')
+					.delay(50)
+					//.style('fill','#333')
+					.attr('height', function(d){
+						return yScale(d);
+					})
+					.attr('y', function(d){
+						return height - yScale(d) - paddingTop + paddingBottom;
+					});
 				});
-			});
+		}
+	};
+
+	var colorMedian = function(){
+		var scrollTop = $(window).scrollTop();
+		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
+			d3.selectAll('rect')
+				.transition(15000)
+				.ease('sine')
+				.delay(50)
+				.style('fill',function(d,i){
+					if (i == 4){
+						return '#eee';
+					} else {
+						return '#666';
+					}
+				});
+		}
+	};
+
+	var unColorMedian = function(){
+		var scrollTop = $(window).scrollTop();
+		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
+			d3.selectAll('rect')
+				.transition(15000)
+				.ease('sine')
+				.delay(50)
+				.style('fill', '#eee');
+		}
 	};
 
 	// Run our functions once on $(document).ready()
 	stickyChart();
 	
-	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing here.
-	$(window).scroll(function() {
+	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing or throttling here.
+	$(window).scroll( $.throttle( 10, true, function(e) {
 		stickyChart();
-	});
+		orderChart();
+		colorMedian();
+	}));
 
 
 
