@@ -64,6 +64,7 @@ $(document).ready(function() {
 	        $('#main-chart').css('background-color',$('body').css('background-color'));
 	        $('#main-chart').css('border-color',$('body').css('background-color'));
 	        $('.before-main-chart').css('padding-bottom',$('#main-chart').height());
+	        orderChart();
 	    } else {
 	        $('#main-chart').removeClass('sticky'); 
 	        $('.before-main-chart').css('padding-bottom',0);   
@@ -73,25 +74,26 @@ $(document).ready(function() {
 	var orderChart = function(){
 		var dataSort = bardata.sort();
 		d3.selectAll('rect')
+			.data(dataSort)
 			.each(function(d,i){
 				console.log(d);
 				d3.select(this)
 				.transition(1000)
 				.ease('elastic')
-				.delay(i*50)
-				.attr('height', function(item){
-					return yScale(dataSort[item]);
+				.delay(50)
+				//.style('fill','#333')
+				.attr('height', function(d){
+					return yScale(d);
 				})
-				.attr('y', function(item){
-					return height - yScale(dataSort[item]) - paddingTop + paddingBottom;
+				.attr('y', function(d){
+					return height - yScale(d) - paddingTop + paddingBottom;
 				});
-				// .style('fill','#333');
 			});
 	};
 
 	// Run our functions once on $(document).ready()
 	stickyChart();
-	orderChart();
+	
 	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing here.
 	$(window).scroll(function() {
 		stickyChart();
