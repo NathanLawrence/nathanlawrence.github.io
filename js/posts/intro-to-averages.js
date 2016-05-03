@@ -70,9 +70,33 @@ $(document).ready(function() {
 	    }
 	};
 
+	var orderChart = function(){
+		var dataSort = bardata.sort();
+		d3.selectAll('rect')
+			.each(function(d,i){
+				console.log(d);
+				d3.select(this)
+				.transition(1000)
+				.ease('elastic')
+				.delay(i*50)
+				.attr('height', function(item){
+					return yScale(dataSort[item]);
+				})
+				.attr('y', function(item){
+					return height - yScale(dataSort[item]) - paddingTop + paddingBottom;
+				});
+				// .style('fill','#333');
+			});
+	};
+
+	// Run our functions once on $(document).ready()
 	stickyChart();
-	// and run it again every time you scroll
+	orderChart();
+	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing here.
 	$(window).scroll(function() {
 		stickyChart();
 	});
+
+
+
 });
