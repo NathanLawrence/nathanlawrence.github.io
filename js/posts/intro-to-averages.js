@@ -134,6 +134,8 @@ $(document).ready(function() {
 
 	// Run our functions once on $(document).ready()
 	stickyChart();
+	orderChart();
+	colorMedian();
 	
 	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing or throttling here.
 	$(window).scroll( $.throttle( 10, true, function(e) {
