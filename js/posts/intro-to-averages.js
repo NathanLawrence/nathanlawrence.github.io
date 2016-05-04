@@ -58,7 +58,10 @@ $(document).ready(function() {
    	var orderChartTop = $('#order-chart').offset().top;
    	var colorMedianTop = $('#color-median').offset().top;
    	var unColorMedianTop = $('#un-color-median').offset().top;
-   	// console.log('Top:' + orderChartTop);
+   	var showMeanTop = $('#demonstrate-mean').offset().top;
+
+   	// Initialize Chart State
+   	var chartState = 0;
    	
    	// This function will decide if the navigation bar should have "sticky" class or not.
    	var stickyChart = function(){
@@ -67,16 +70,13 @@ $(document).ready(function() {
 	    // If we've scrolled the chart off the page, even the tiniest bit, change its position to fixed to stick to top.
 	    // Otherwise, change it back to relative
 	    if (scrollTop > stickyChartTop - 5) { // This 5px add may seem like a lot of extra room, but it creates a kinda neat magnet effect and avoids weird bouncing artifacts.
-	        console.log(scrollTop);
 	        $('#main-chart').addClass('sticky');   
-	        console.log('after:' + scrollTop);
 	        $('#main-chart').css('left',stickyChartLeft - 10);
 	        $('#main-chart').css('background-color',$('body').css('background-color'));
 	        $('#main-chart').css('border-color',$('body').css('background-color'));
 	        $('.before-main-chart').css('padding-bottom',height);
 	        
 	    } else {
-	    	console.log(scrollTop);
 	    	$('.before-main-chart').css('padding',0);
 	        $('#main-chart').removeClass('sticky');
 	        resetChart(); 
@@ -85,16 +85,14 @@ $(document).ready(function() {
 
 	var orderChart = function(){
 		var scrollTop = $(window).scrollTop();
-		if ((scrollTop + $(window).height()/2 + 50) > orderChartTop){
+		if (((scrollTop + $(window).height()/2 + 50) > orderChartTop) && chartState === 0){
 			d3.selectAll('rect')
 				.data(dataSort)
 				.each(function(d,i){
-					console.log(d);
 					d3.select(this)
 					.transition()
 					.duration(1000)
 					.ease('elastic')
-					//.style('fill','#333')
 					.attr('height', function(d){
 						return yScale(d);
 					})
@@ -102,12 +100,13 @@ $(document).ready(function() {
 						return height - yScale(d) - paddingTop + paddingBottom;
 					});
 				});
+			chartState = 1;
 		}
 	};
 
 	var colorMedian = function(){
 		var scrollTop = $(window).scrollTop();
-		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
+		if (((scrollTop + $(window).height()/2 + 50) > colorMedianTop) && chartState === 1){
 			d3.selectAll('rect')
 				.transition()
 				.duration(1000)
@@ -123,12 +122,41 @@ $(document).ready(function() {
 		}
 	};
 
+	var unSort = function(){
+		var scrollTop = $(window).scrollTop();
+		if (((scrollTop + $(window).height()/2) > unColorMedianTop) && chartState < 3){
+			resetChart();
+		}
+	}
+
+	var showMean = function(){
+		var scrollTop = $(window).scrollTop();
+
+		if (((scrollTop + $(window).height()/2 + 50) > showMeanTop) && chartState === 0){
+			var mean = d3.mean(dataSort);
+			d3.selectAll('rect')
+				.each(function(d,i){
+					d3.select(this)
+					.data(dataSort)
+					.transition()
+					.duration(1000)
+					.ease('elastic')
+					.attr('height', function(mean){
+						return yScale(mean);
+					})
+					.attr('y', function(mean){
+						return height - yScale(mean) - paddingTop + paddingBottom;
+					});
+				});
+			chartState = 3;
+		}
+	}
+
 	// There is no if statement on this function because it exists for DRY purposes.
 	var resetChart = function(){
 		d3.selectAll('rect')
 			.data(bardata)
 			.each(function(d,i){
-				console.log(d);
 				d3.select(this)
 				.transition()
 				.duration(1000)
@@ -141,7 +169,9 @@ $(document).ready(function() {
 					return height - yScale(d) - paddingTop + paddingBottom;
 				});
 			});
+		chartState = 0;
 	};
+
 
 	// Run our functions once on $(document).ready()
 	stickyChart();
@@ -154,6 +184,8 @@ $(document).ready(function() {
 		stickyChart();
 		orderChart();
 		colorMedian();
+		unSort();
+		showMean();
 	}));
 
 
