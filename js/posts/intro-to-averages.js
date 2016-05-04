@@ -108,7 +108,8 @@ $(document).ready(function() {
 		var scrollTop = $(window).scrollTop();
 		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
 			d3.selectAll('rect')
-				.transition(15000)
+				.transition()
+				.duration(1000)
 				.ease('sine')
 				.delay(50)
 				.style('fill',function(d,i){
@@ -125,7 +126,8 @@ $(document).ready(function() {
 		var scrollTop = $(window).scrollTop();
 		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
 			d3.selectAll('rect')
-				.transition(15000)
+				.transition()
+				.duration(1000)
 				.ease('sine')
 				.delay(50)
 				.style('fill', '#eee');
