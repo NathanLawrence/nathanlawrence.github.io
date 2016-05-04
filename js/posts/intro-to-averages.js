@@ -78,7 +78,8 @@ $(document).ready(function() {
 	    } else {
 	    	console.log(scrollTop);
 	    	$('.before-main-chart').css('padding',0);
-	        $('#main-chart').removeClass('sticky'); 
+	        $('#main-chart').removeClass('sticky');
+	        resetChart(); 
 	    }
 	};
 
@@ -90,9 +91,9 @@ $(document).ready(function() {
 				.each(function(d,i){
 					console.log(d);
 					d3.select(this)
-					.transition(1000)
+					.transition()
+					.duration(1000)
 					.ease('elastic')
-					.delay(50)
 					//.style('fill','#333')
 					.attr('height', function(d){
 						return yScale(d);
@@ -122,23 +123,32 @@ $(document).ready(function() {
 		}
 	};
 
-	var unColorMedian = function(){
-		var scrollTop = $(window).scrollTop();
-		if ((scrollTop + $(window).height()/2 + 50) > colorMedianTop){
-			d3.selectAll('rect')
+	// There is no if statement on this function because it exists for DRY purposes.
+	var resetChart = function(){
+		d3.selectAll('rect')
+			.data(bardata)
+			.each(function(d,i){
+				console.log(d);
+				d3.select(this)
 				.transition()
 				.duration(1000)
-				.ease('sine')
-				.delay(50)
-				.style('fill', '#eee');
-		}
+				.ease('elastic')
+				.style('fill','#eee')
+				.attr('height', function(d){
+					return yScale(d);
+				})
+				.attr('y', function(d){
+					return height - yScale(d) - paddingTop + paddingBottom;
+				});
+			});
 	};
 
 	// Run our functions once on $(document).ready()
 	stickyChart();
 	orderChart();
-	colorMedian();
-	
+
+		
+
 	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing or throttling here.
 	$(window).scroll( $.throttle( 10, true, function(e) {
 		stickyChart();
