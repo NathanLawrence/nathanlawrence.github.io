@@ -109,7 +109,7 @@ $(document).ready(function() {
 		if (((scrollTop + $(window).height()/2 + 50) > colorMedianTop) && chartState === 1){
 			d3.selectAll('rect')
 				.transition()
-				.duration(1000)
+				.duration(300)
 				.ease('sine')
 				.delay(50)
 				.style('fill',function(d,i){
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		var scrollTop = $(window).scrollTop();
 
 		if (((scrollTop + $(window).height()/2 + 50) > showMeanTop) && chartState === 0){
-			var mean = d3.mean(dataSort);
+			var mean = d3.mean(bardata);
 			d3.selectAll('rect')
 				.each(function(d,i){
 					d3.select(this)
