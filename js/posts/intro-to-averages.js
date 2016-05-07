@@ -23,7 +23,7 @@ $(document).ready(function() {
 		.domain(d3.range(0,bardata.length))
 		.rangeRoundBands([0,width - paddingRight - paddingLeft],barOffset,0)
 
-	var barWidth = (width - paddingLeft - paddingRight - 2*barOffset)/bardata.length;
+	var barWidth = (width - paddingLeft - paddingRight - 2 * barOffset) / bardata.length;
 
 	d3.select('#main-chart').append('svg')
 		.attr('width',width)
@@ -126,6 +126,7 @@ $(document).ready(function() {
 		var scrollTop = $(window).scrollTop();
 		if (((scrollTop + $(window).height()/2) > unColorMedianTop) && chartState < 3){
 			resetChart();
+			chartState = 0;
 		}
 	}
 
@@ -134,18 +135,19 @@ $(document).ready(function() {
 
 		if (((scrollTop + $(window).height()/2 + 50) > showMeanTop) && chartState === 0){
 			var mean = d3.mean(bardata);
+			var meanAdj = yScale(mean);
 			d3.selectAll('rect')
 				.each(function(d,i){
 					d3.select(this)
-					.data(dataSort)
+					.data(bardata)
 					.transition()
 					.duration(1000)
 					.ease('elastic')
 					.attr('height', function(mean){
-						return yScale(mean);
+						return meanAdj;
 					})
 					.attr('y', function(mean){
-						return height - yScale(mean) - paddingTop + paddingBottom;
+						return height - meanAdj - paddingTop + paddingBottom;
 					});
 				});
 			chartState = 3;
@@ -176,7 +178,6 @@ $(document).ready(function() {
 	// Run our functions once on $(document).ready()
 	stickyChart();
 	orderChart();
-
 		
 
 	// And and run them again every time JQuery feels a scroll. Ideally, there should be some debouncing or throttling here.
@@ -187,7 +188,5 @@ $(document).ready(function() {
 		unSort();
 		showMean();
 	}));
-
-
 
 });
