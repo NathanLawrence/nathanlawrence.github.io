@@ -19,7 +19,7 @@ layout: default
   <div class="post-list-short col-md-4">
     <h2>Recent Posts</h2>
     <ul class="post-list">
-      {% for post in site.posts limit:2 %}
+      {% for post in site.posts limit:3 %}
         <li>
           <h2>
             <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
